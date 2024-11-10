@@ -1,5 +1,7 @@
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { STARTUPS_QUERY } from "@/sanity/lib/queries";
 import React from "react";
 
 const Home = async ({
@@ -11,18 +13,10 @@ const Home = async ({
 }) => {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      _id: 1,
-      _createdAt: new Date(),
-      views: 55,
-      author: { _id: 1, name: "Unitree" },
-      description: "description",
-      category: "Robots",
-      image: "https://www.unitree.com/g1/",
-      title: "We Robots",
-    },
-  ];
+  const { data: posts } = await sanityFetch({
+    query: STARTUPS_QUERY,
+  });
+
   return (
     <>
       <section className='pink_container'>
@@ -43,7 +37,7 @@ const Home = async ({
 
         <ul className='mt-7 card_grid'>
           {posts.length > 0 ? (
-            posts.map((post: StartupCardType) => (
+            posts.map((post: StartupTypeCard) => (
               <StartupCard key={post._id} post={post} />
             ))
           ) : (
@@ -51,6 +45,8 @@ const Home = async ({
           )}
         </ul>
       </section>
+
+      <SanityLive />
     </>
   );
 };
