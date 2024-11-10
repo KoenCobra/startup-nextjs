@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
     buildActivity: true,
     buildActivityPosition: "bottom-right",
   },
+  experimental: {
+    after: true,
+  },
 };
 
 export default nextConfig;
