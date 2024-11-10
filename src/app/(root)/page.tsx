@@ -12,9 +12,11 @@ const Home = async ({
   }>;
 }) => {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
   const { data: posts } = await sanityFetch({
     query: STARTUPS_QUERY,
+    params,
   });
 
   return (
